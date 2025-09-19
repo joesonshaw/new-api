@@ -7,6 +7,8 @@ var ModelList = []string{
 	"SparkDesk-v3.1",
 	"SparkDesk-v3.5",
 	"SparkDesk-v4.0",
+	"SparkDesk-max-32k",
+	"SparkDesk-pro-128k",
 }
 
 var ChannelName = "xunfei"

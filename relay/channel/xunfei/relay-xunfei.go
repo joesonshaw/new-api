@@ -257,14 +257,27 @@ func apiVersion2domain(apiVersion string) string {
 		return "generalv3.5"
 	case "v4.0":
 		return "4.0Ultra"
+	case "max-32k":
+		return "max-32k"
+	case "pro-128k":
+		return "pro-128k"
 	}
-	return "general" + apiVersion
+	if strings.HasPrefix(apiVersion, "v") {
+		return  "general" + apiVersion
+		} else {
+		return apiVersion
+	}
 }
 
 func getXunfeiAuthUrl(c *gin.Context, apiKey string, apiSecret string, modelName string) (string, string) {
 	apiVersion := getAPIVersion(c, modelName)
 	domain := apiVersion2domain(apiVersion)
-	authUrl := buildXunfeiAuthUrl(fmt.Sprintf("wss://spark-api.xf-yun.com/%s/chat", apiVersion), apiKey, apiSecret)
+	var authUrl = ""
+	if strings.HasPrefix(apiVersion, "v") {
+		authUrl = buildXunfeiAuthUrl(fmt.Sprintf("wss://spark-api.xf-yun.com/%s/chat", apiVersion), apiKey, apiSecret)
+		} else {
+		authUrl = buildXunfeiAuthUrl(fmt.Sprintf("wss://spark-api.xf-yun.com/chat/%s", apiVersion), apiKey, apiSecret)
+	}
 	return domain, authUrl
 }
 
@@ -274,7 +287,7 @@ func getAPIVersion(c *gin.Context, modelName string) string {
 	if apiVersion != "" {
 		return apiVersion
 	}
-	parts := strings.Split(modelName, "-")
+	parts := strings.SplitN(modelName, "-", 2)
 	if len(parts) == 2 {
 		apiVersion = parts[1]
 		return apiVersion

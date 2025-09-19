@@ -837,7 +837,7 @@ const EditChannelModal = (props) => {
       );
     }
     if (localInputs.type === 18 && localInputs.other === '') {
-      localInputs.other = 'v2.1';
+      localInputs.other = 'v1.1';
     }
 
     // 生成渠道额外设置JSON
@@ -1526,7 +1526,7 @@ const EditChannelModal = (props) => {
                       field='other'
                       label={t('模型版本')}
                       placeholder={
-                        '请输入星火大模型版本，注意是接口地址中的版本号，例如：v2.1'
+                        '请输入星火大模型版本，注意是接口地址中的版本号，例如：v1.1'
                       }
                       onChange={(value) => handleInputChange('other', value)}
                       showClear
